@@ -198,12 +198,31 @@
         #voucherUsedIcon {
             margin-right: 4px;
         }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border: none;
+            background: #f1f1f1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn-back:hover {
+            background: #e0e0e0;
+        }
     </style>
 </head>
 
 <body>
     <div class="screen">
-
+        <button class="btn-back" onclick="backToHome()">← Trang chủ</button>
         <!-- HEADER -->
         <div class="header-wrap">
             <div class="header-bar">Giỏ Hàng</div>
@@ -320,6 +339,14 @@
             // Có thể thêm logic reset giỏ hàng hoặc chuyển trang
         }
 
+        function backToHome() {
+            // Reset tất cả voucher đã áp dụng
+            localStorage.removeItem("freeshipUsed");
+            localStorage.removeItem("healthyApplied");
+            // Chuyển về trang chủ
+            window.location.href = "trangChu.html";
+        }
+
         document.addEventListener("DOMContentLoaded", function () {
             const shippingFeeSpan = document.getElementById("shippingFee");
             const totalAmountSpan = document.getElementById("totalAmount");
@@ -377,6 +404,7 @@
 
             // Hiển thị tổng tiền cuối cùng
             totalAmountSpan.textContent = formatMoney(total);
+
         });
 
     </script>
