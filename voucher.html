@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food App - Vouchers</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            background: #ffffff;
+        }
+
+        .screen {
+            width: 100%;
+            max-width: 414px;
+            min-height: 100vh;
+            padding: 24px 18px 32px;
+        }
+
+        /* TITLE */
+        .title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 22px;
+        }
+
+        /* CIRCLE POINTS */
+        .points-wrap {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+
+        /* vòng cung xanh */
+        .progress-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            /* đoạn 280 độ màu xanh, chừa 80 độ ở dưới cho giống app */
+            background: conic-gradient(#00c853 140deg 420deg,
+                    transparent 420deg 500deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(10deg);
+            /* xoay nhẹ cho giống hình */
+        }
+
+        /* vòng tròn trắng bên trong */
+        .inner-circle {
+            width: 115px;
+            height: 115px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(-10deg);
+            /* xoay ngược lại để chữ không nghiêng */
+        }
+
+        .points-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00c853;
+            margin-bottom: 4px;
+        }
+
+        .points-label {
+            font-size: 14px;
+            color: #00c853;
+            font-weight: 600;
+        }
+
+        /* VOUCHER SECTION */
+        .section-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .voucher-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .voucher-card {
+            flex: 1;
+            background: #f1f1f1;
+            border-radius: 12px;
+            padding: 10px 8px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        .voucher-icon-box {
+            width: 70px;
+            height: 40px;
+            border-radius: 8px;
+            background: #00c853;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+
+        .voucher-icon-box span {
+            font-size: 22px;
+            color: #ffffff;
+        }
+
+        .voucher-name {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .voucher-point {
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .voucher-point small {
+            font-size: 11px;
+        }
+
+        .btn-redeem {
+            margin-top: auto;
+            width: 100%;
+            border: none;
+            border-radius: 999px;
+            padding: 6px 0;
+            background: #00c853;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .progress-circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: conic-gradient(#00c853 0deg, transparent 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(10deg);
+            transition: background 0.3s linear;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen">
+
+        <!-- TITLE -->
+        <div class="title">EATGREEN Rewards</div>
+
+        <!-- CIRCLE POINTS -->
+        <div class="points-wrap">
+            <div class="progress-circle">
+                <div class="inner-circle">
+                    <div class="points-number">150</div>
+                    <div class="points-label">Điểm xanh</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VOUCHERS -->
+        <div class="section-title">Vouchers</div>
+
+        <div class="voucher-row">
+            <!-- Voucher 1 -->
+            <div class="voucher-card">
+                <div class="voucher-icon-box">
+                    <span>🚕</span>
+                </div>
+                <div class="voucher-name">Freeship</div>
+                <div class="voucher-point"><small>(100đ)</small></div>
+                <button class="btn-redeem" onclick="redeemFreeship()">Redeem</button>
+            </div>
+
+
+            <!-- Voucher 2 -->
+            <div class="voucher-card">
+                <div class="voucher-icon-box">
+                    <span>%</span>
+                </div>
+                <div class="voucher-name">giảm 30k Healthy</div>
+                <div class="voucher-point"><small>(200đ)</small></div>
+                <button class="btn-redeem">Redeem</button>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        // animation vòng tròn
+        document.addEventListener("DOMContentLoaded", function () {
+            let circle = document.querySelector(".progress-circle");
+
+            let currentDeg = 0;
+            let targetDeg = 280;   // độ dài vòng cung
+            let speed = 4;
+
+            function animateCircle() {
+                if (currentDeg < targetDeg) {
+                    currentDeg += speed;
+                    circle.style.background = `conic-gradient(#00c853 ${currentDeg}deg, transparent ${currentDeg}deg)`;
+                    requestAnimationFrame(animateCircle);
+                }
+            }
+
+            animateCircle();
+        });
+
+        // dùng freeship -> set localStorage + quay lại cart
+        function redeemFreeship() {
+            localStorage.setItem("freeshipUsed", "true");
+            window.location.href = "gioHang.html"; // đổi tên nếu file giỏ hàng của bạn khác
+        }
+    </script>
+
+</body>
+
+</html>

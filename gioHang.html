@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food App - Cart</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .screen {
+            width: 100%;
+            max-width: 414px;
+            min-height: 100vh;
+            padding: 0 18px 24px;
+        }
+
+        /* HEADER GIỎ HÀNG */
+        .header-wrap {
+            padding-top: 12px;
+            margin-bottom: 12px;
+        }
+
+        .header-bar {
+            background: #00c853;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            border-radius: 0 0 12px 12px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        /* LIST CART */
+        .cart-list {
+            margin-top: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .cart-item {
+            background: #f1f1f1;
+            border-radius: 10px;
+            padding: 8px 10px;
+            display: flex;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: #e8e8e8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .cart-item:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .item-img-wrap {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .item-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .item-texts {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .item-name {
+            font-size: 14px;
+        }
+
+        .item-price {
+            font-size: 13px;
+        }
+
+        .item-healthy {
+            font-size: 12px;
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        .item-healthy span {
+            font-weight: 600;
+            cursor: pointer;
+            color: #00c853;
+            transition: color 0.2s;
+        }
+
+        .item-healthy span:hover {
+            color: #00953f;
+            text-decoration: underline;
+        }
+
+        .item-points-text {
+            font-size: 12px;
+            color: #555;
+            text-align: right;
+            margin-top: 4px;
+            margin-bottom: -2px;
+        }
+
+        /* VOUCHER & SHIPPING BLOCKS */
+        .info-row {
+            margin-top: 8px;
+            background: #e8e8e8;
+            border-radius: 4px;
+            padding: 8px 10px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .voucher-link {
+            color: #00c853;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .voucher-link:hover {
+            color: #00953f;
+        }
+
+        .strike {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .applied-note {
+            font-size: 11px;
+            color: #00c853;
+            text-align: right;
+            margin-top: 2px;
+        }
+
+        /* TOTAL + PAYMENT */
+        .total-row {
+            margin-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 15px;
+        }
+
+        .total-row span:last-child {
+            font-weight: 700;
+        }
+
+        .btn-payment {
+            margin-top: 10px;
+            width: 100%;
+            border: none;
+            background: #00c853;
+            color: #fff;
+            padding: 12px 0;
+            border-radius: 20px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        #voucherUsedIcon {
+            margin-right: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen">
+
+        <!-- HEADER -->
+        <div class="header-wrap">
+            <div class="header-bar">Giỏ Hàng</div>
+        </div>
+
+        <!-- DANH SÁCH MÓN -->
+        <div class="cart-list">
+
+            <!-- Item 1 -->
+            <div class="cart-item">
+                <div class="item-img-wrap">
+                    <img src="../DU AN 2/images/comtron.jpg" alt="Cơm trộn">
+                </div>
+                <div class="item-right">
+                    <div class="item-texts">
+                        <div class="item-name">Cơm trộn</div>
+                        <div class="item-price">70.000</div>
+                    </div>
+                    <!-- CHECK HEALTHY -->
+                    <div class="item-healthy">
+                        <span>Check Healthy</span> &nbsp;➜
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="cart-item">
+                <div class="item-img-wrap">
+                    <img src="../DU AN 2/images/traxanh.jpg" alt="Freeze trà xanh">
+                </div>
+                <div class="item-right">
+                    <div class="item-texts">
+                        <div class="item-name">Freeze trà xanh</div>
+                        <div class="item-price">55.000</div>
+                    </div>
+                    <!-- CHECK HEALTHY -->
+                    <div class="item-healthy" onclick="window.location.href='trang2.html'">
+                        <span>Check Healthy</span> &nbsp;➜
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="cart-item">
+                <div class="item-img-wrap">
+                    <img src="../DU AN 2/images/salad.png" alt="Salad hoa quả">
+                </div>
+                <div class="item-right">
+                    <div class="item-texts">
+                        <div class="item-name">Salad hoa quả</div>
+                        <div class="item-price">60.000</div>
+                    </div>
+                    <div class="item-points-text">Tích 20 điểm</div>
+                    <!-- CHECK HEALTHY -->
+                    <div class="item-healthy" onclick="window.location.href='trang3.html'">
+                        <span>Check Healthy</span> &nbsp;➜
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- VOUCHER & SHIPPING -->
+        <div class="info-row">
+            <span>Voucher - Điểm xanh</span>
+            <span>
+                <span id="voucherUsedIcon"
+                    style="display:none; color:#00c853; font-size:14px; font-weight:700;">✔</span>
+                <span id="voucherUseBtn" class="voucher-link" onclick="window.location.href='voucher.html'">sử
+                    dụng</span>
+            </span>
+
+        </div>
+
+        <div class="info-row">
+            <span>Shipping fee:</span>
+            <span id="shippingFee">45.000</span>
+        </div>
+        <div id="shippingNote" class="applied-note" style="display:none;">
+            Freeship voucher applied
+        </div>
+
+        <!-- TOTAL + PAYMENT -->
+        <div class="total-row">
+            <span>Total</span>
+            <span id="totalAmount">230.000</span>
+        </div>
+
+        <button class="btn-payment">Payment</button>
+
+    </div>
+
+    <script>
+        // tổng tiền món ăn (70k + 55k + 60k)
+        const ITEMS_TOTAL = 185000;
+        const SHIPPING_FEE = 45000;
+
+        function formatMoney(n) {
+            return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const shippingFeeSpan = document.getElementById("shippingFee");
+            const totalAmountSpan = document.getElementById("totalAmount");
+            const shippingNote = document.getElementById("shippingNote");
+
+            const voucherIcon = document.getElementById("voucherUsedIcon");
+            const voucherBtn = document.getElementById("voucherUseBtn");
+
+            const freeshipUsed = localStorage.getItem("freeshipUsed") === "true";
+
+            if (freeshipUsed) {
+                // shipping
+                shippingFeeSpan.classList.add("strike");
+                shippingNote.style.display = "block";
+                totalAmountSpan.textContent = formatMoney(ITEMS_TOTAL);
+
+                // voucher UI: hiện dấu ✔, ẩn chữ sử dụng
+                voucherIcon.style.display = "inline";
+                voucherBtn.style.display = "none";
+
+            } else {
+                // chưa redeem
+                shippingFeeSpan.textContent = formatMoney(SHIPPING_FEE);
+                totalAmountSpan.textContent = formatMoney(ITEMS_TOTAL + SHIPPING_FEE);
+
+                voucherIcon.style.display = "none";
+                voucherBtn.style.display = "inline";
+            }
+        });
+
+    </script>
+</body>
+
+</html>

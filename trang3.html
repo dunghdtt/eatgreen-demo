@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Healthy - Fruit Salad</title>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <script src="../js/jquery-3.7.1.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .screen {
+            width: 100%;
+            max-width: 414px;
+            min-height: 100vh;
+            padding: 24px 18px;
+        }
+
+        /* BACK BUTTON */
+        .back-btn {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            color: #00c853;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        /* TITLE */
+        .title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #444;
+            margin-bottom: 18px;
+        }
+
+        /* BOX CHỈ SỐ */
+        .box {
+            background: #e8e8e8;
+            padding: 18px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+        }
+
+        .row {
+            margin-bottom: 16px;
+        }
+
+        .label {
+            font-weight: 600;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        /* PROGRESS BAR */
+        .progress {
+            display: flex;
+            width: 100%;
+            height: 14px;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .bar {
+            height: 100%;
+            background: #00c853;
+            /* xanh giống mẫu */
+            width: 0%;
+        }
+
+        .value {
+            font-size: 14px;
+            text-align: right;
+        }
+
+        /* INFO BOX */
+        .info-box {
+            background: #e8e8e8;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .info-title {
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .info-text {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen">
+
+        <!-- BACK -->
+        <div class="back-btn" onclick="window.location.href='gioHang.html'">
+            ←
+        </div>
+
+        <!-- TITLE -->
+        <div class="title">Check Healthy</div>
+        <div class="subtitle">Fruit salad</div>
+
+        <!-- NUTRITION BARS -->
+        <div class="box">
+
+            <!-- Muối 2% -->
+            <div class="row">
+                <div class="label">Muối</div>
+                <div class="progress">
+                    <div class="bar" style="width: 2%;"></div>
+                </div>
+                <div class="value">2%</div>
+            </div>
+
+            <!-- Đường 8g -->
+            <div class="row">
+                <div class="label">Đường</div>
+                <div class="progress">
+                    <div class="bar" style="width: 40%;"></div>
+                </div>
+                <div class="value">8 g</div>
+            </div>
+
+            <!-- Dầu ăn 15% -->
+            <div class="row">
+                <div class="label">Dầu ăn</div>
+                <div class="progress">
+                    <div class="bar" style="width: 15%;"></div>
+                </div>
+                <div class="value">15%</div>
+            </div>
+
+        </div>
+
+        <!-- INFO -->
+        <div class="info-box">
+            <div class="info-title">FRUIT SALAD</div>
+            <div class="info-text">
+                Ăn salad 3–5 lần/tuần là hợp lý.<br>
+                Nếu giảm cân: 1 bữa/ngày.<br>
+                Nếu chỉ bổ sung rau: 2–3 lần/tuần.
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

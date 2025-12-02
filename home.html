@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food App - Home Main</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+        }
+
+        .screen {
+            width: 100%;
+            max-width: 414px;
+            min-height: 100vh;
+            background: #f8f8f8;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ================== HEADER XANH ================== */
+        .hero {
+            background: radial-gradient(circle at top left, #1ad16b 0, #00713b 55%, #00572c 100%);
+            color: #fff;
+            padding: 14px 16px 22px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
+        }
+
+        .hero-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 13px;
+        }
+
+        .hero-left-top {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-icon {
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .hero-location {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-location span.label {
+            font-size: 11px;
+            opacity: 0.9;
+            letter-spacing: 0.05em;
+        }
+
+        .hero-location span.place {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 14px;
+        }
+
+        .hero-right-top {
+            display: flex;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .round-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* search trong hero */
+        .hero-search-wrap {
+            margin-top: 6px;
+        }
+
+        .hero-search {
+            margin-top: 8px;
+            background: #ffffff;
+            border-radius: 999px;
+            padding: 10px 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-search input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .hero-search span.icon {
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .hero-promo {
+            margin-top: 14px;
+        }
+
+        .hero-promo-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+
+        .hero-promo-sub {
+            font-size: 13px;
+            opacity: 0.95;
+        }
+
+        /* ================== TABS DELIVERY ================== */
+        .tabs {
+            padding: 12px 16px 8px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 20px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #f5f5f5;
+        }
+
+        .tab.active {
+            background: #024c2a;
+            color: #fff;
+            border-color: #024c2a;
+        }
+
+        /* ================== CATEGORY SCROLL ================== */
+        .scroll-h {
+            padding: 0 12px;
+            margin-top: 4px;
+            overflow-x: auto;
+        }
+
+        .cat-row {
+            display: flex;
+            gap: 18px;
+            padding-bottom: 6px;
+        }
+
+        .cat-item {
+            min-width: 70px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .cat-img-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 4px;
+            background: #fff;
+        }
+
+        .cat-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ================== DEAL CARDS ================== */
+        .deal-section {
+            padding: 10px 12px 0;
+        }
+
+        .deal-row {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .deal-card {
+            min-width: 150px;
+            background: #fff;
+            border-radius: 16px;
+            padding: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        .deal-img {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .deal-img img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+        }
+
+        .deal-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .deal-sub {
+            font-size: 11px;
+            color: #555;
+        }
+
+        /* ================== SECTION "Mua Ngay" ================== */
+        .section-title {
+            padding: 4px 12px 0;
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title span.arrow {
+            font-size: 16px;
+        }
+
+        .big-banner {
+            margin: 8px 12px 60px;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffe94d;
+        }
+
+        .big-banner img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* ================== FLOAT CART BUTTON ================== */
+        .cart-fab {
+            position: fixed;
+            right: 18px;
+            bottom: 20px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: none;
+            background: #00c853;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #fff;
+            font-size: 22px;
+            z-index: 20;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="screen">
+
+        <!-- ========== HEADER XANH ========== -->
+        <div class="hero">
+            <div class="hero-top">
+                <div class="hero-left-top">
+                    <span class="back-icon">←</span>
+                    <div class="hero-location">
+                        <span class="label">DELIVER TO</span>
+                        <span class="place">
+                            The Manor 1 Building
+                            <span>▾</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="hero-right-top">
+                    <div class="round-icon">♡</div>
+                    <div class="round-icon">≡</div>
+                </div>
+            </div>
+
+            <div class="hero-search-wrap">
+                <div class="hero-search">
+                    <span class="icon">🔍</span>
+                    <input type="text" placeholder="What shall we deliver?">
+                </div>
+            </div>
+
+            <div class="hero-promo">
+                <div class="hero-promo-title">Đại chiến gu đỉnh</div>
+                <div class="hero-promo-sub">Ăn Ngon Đã Ghiền Với Pepsi →</div>
+            </div>
+        </div>
+
+        <!-- ========== TABS DELIVERY / DINE OUT ========== -->
+        <div class="tabs">
+            <div class="tab active">
+                🚴‍♂️ Delivery
+            </div>
+            <div class="tab">
+                🛎 Dine Out Deals
+            </div>
+        </div>
+
+        <!-- ========== CATEGORIES ========== -->
+        <div class="scroll-h">
+            <div class="cat-row">
+                <div class="cat-item">
+                    <div class="cat-img-wrap">
+                        <img src="https://images.pexels.com/photos/1437267/pexels-photo-1437267.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Rice">
+                    </div>
+                    <div>Rice</div>
+                </div>
+
+                <div class="cat-item">
+                    <div class="cat-img-wrap">
+                        <img src="https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Noodles">
+                    </div>
+                    <div>Noodles &amp; Congee</div>
+                </div>
+
+                <div class="cat-item">
+                    <div class="cat-img-wrap">
+                        <img src="https://images.pexels.com/photos/373888/pexels-photo-373888.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Coffee">
+                    </div>
+                    <div>Coffee - Tea - Juice</div>
+                </div>
+
+                <div class="cat-item">
+                    <div class="cat-img-wrap">
+                        <img src="https://images.pexels.com/photos/373888/pexels-photo-373888.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Milk Tea">
+                    </div>
+                    <div>Milk Tea</div>
+                </div>
+
+                <div class="cat-item">
+                    <div class="cat-img-wrap">
+                        <img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Snacks">
+                    </div>
+                    <div>Snacks</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== DEALS ========== -->
+        <div class="deal-section">
+            <div class="deal-row">
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="https://images.pexels.com/photos/4109130/pexels-photo-4109130.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Món cho cả nhà">
+                    </div>
+                    <div class="deal-title">Món cho cả nhà</div>
+                    <div class="deal-sub">Giảm đến 100K</div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="https://images.pexels.com/photos/1438672/pexels-photo-1438672.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Deal HOT bánh tráng">
+                    </div>
+                    <div class="deal-title">Deal HOT bánh tráng</div>
+                    <div class="deal-sub">Deal HOT bánh tr...</div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-img">
+                        <img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=400"
+                            alt="Near you">
+                    </div>
+                    <div class="deal-title">Near you</div>
+                    <div class="deal-sub">Get it quick nearby</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== MUA NGAY ========== -->
+        <div class="section-title">
+            <span>Mua Ngay</span>
+            <span class="arrow">→</span>
+        </div>
+
+        <div class="big-banner">
+            <img src="https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&w=800"
+                alt="Main promo">
+        </div>
+
+        <!-- NÚT GIỎ HÀNG -->
+        <button class="cart-fab" onclick="window.location.href='gioHang.html'">
+            🛒
+        </button>
+
+    </div>
+</body>
+
+</html>
