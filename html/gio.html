@@ -274,6 +274,9 @@
                     style="display:none; color:#00c853; font-size:14px; font-weight:700;">✔</span>
                 <span id="voucherUseBtn" class="voucher-link" onclick="window.location.href='vou.html'">sử
                     dụng</span>
+                <span id="voucherChangeBtn" class="voucher-link" style="display:none;"
+                    onclick="localStorage.removeItem('freeshipUsed'); localStorage.removeItem('healthyApplied'); window.location.href='vou.html'">chọn
+                    lại</span>
             </span>
 
         </div>
@@ -286,13 +289,19 @@
             Freeship voucher applied
         </div>
 
+        <!-- HEALTHY DISCOUNT -->
+        <div class="info-row" id="healthyDiscountRow" style="display:none;">
+            <span>Giảm giá Healthy:</span>
+            <span style="color:#00c853; font-weight:600;">-30.000</span>
+        </div>
+
         <!-- TOTAL + PAYMENT -->
         <div class="total-row">
             <span>Total</span>
             <span id="totalAmount">230.000</span>
         </div>
 
-        <button class="btn-payment">Payment</button>
+        <button class="btn-payment" onclick="handlePayment()">Payment</button>
 
     </div>
 
@@ -300,39 +309,74 @@
         // tổng tiền món ăn (70k + 55k + 60k)
         const ITEMS_TOTAL = 185000;
         const SHIPPING_FEE = 45000;
+        const HEALTHY_DISCOUNT = 30000;
 
         function formatMoney(n) {
             return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        function handlePayment() {
+            alert("Cảm ơn quý khách đã đặt hàng!\nĐơn hàng của bạn đang được xử lý.");
+            // Có thể thêm logic reset giỏ hàng hoặc chuyển trang
         }
 
         document.addEventListener("DOMContentLoaded", function () {
             const shippingFeeSpan = document.getElementById("shippingFee");
             const totalAmountSpan = document.getElementById("totalAmount");
             const shippingNote = document.getElementById("shippingNote");
+            const healthyDiscountRow = document.getElementById("healthyDiscountRow");
 
             const voucherIcon = document.getElementById("voucherUsedIcon");
             const voucherBtn = document.getElementById("voucherUseBtn");
+            const voucherChangeBtn = document.getElementById("voucherChangeBtn");
 
             const freeshipUsed = localStorage.getItem("freeshipUsed") === "true";
+            const healthyApplied = localStorage.getItem("healthyApplied") === "true";
 
-            if (freeshipUsed) {
-                // shipping
-                shippingFeeSpan.classList.add("strike");
-                shippingNote.style.display = "block";
-                totalAmountSpan.textContent = formatMoney(ITEMS_TOTAL);
+            // Tính tổng tiền
+            let total = ITEMS_TOTAL;
 
-                // voucher UI: hiện dấu ✔, ẩn chữ sử dụng
+            // Xử lý giảm giá healthy
+            if (healthyApplied) {
+                healthyDiscountRow.style.display = "flex";
+                total -= HEALTHY_DISCOUNT;
+            }
+            if (freeshipUsed || healthyApplied) {
+                // Đổi UI sang trạng thái "Đã dùng"
                 voucherIcon.style.display = "inline";
                 voucherBtn.style.display = "none";
+                voucherChangeBtn.style.display = "inline";
+
+                // Nếu dùng healthy thì hiện giảm giá
+                if (healthyApplied) {
+                    healthyDiscountRow.style.display = "flex";
+                    total -= HEALTHY_DISCOUNT;
+                    // Cộng lại ship vì không dùng freeship
+                    total += SHIPPING_FEE;
+                    shippingFeeSpan.textContent = formatMoney(SHIPPING_FEE);
+                    shippingFeeSpan.classList.remove("strike");
+                    shippingNote.style.display = "none";
+                }
+
+                // Nếu dùng freeship
+                if (freeshipUsed) {
+                    shippingFeeSpan.classList.add("strike");
+                    shippingNote.style.display = "block";
+                    healthyDiscountRow.style.display = "none"; // Ẩn dòng healthy
+                }
 
             } else {
-                // chưa redeem
+                // Chưa dùng voucher nào
                 shippingFeeSpan.textContent = formatMoney(SHIPPING_FEE);
-                totalAmountSpan.textContent = formatMoney(ITEMS_TOTAL + SHIPPING_FEE);
+                total += SHIPPING_FEE;
 
                 voucherIcon.style.display = "none";
                 voucherBtn.style.display = "inline";
+                voucherChangeBtn.style.display = "none";
             }
+
+            // Hiển thị tổng tiền cuối cùng
+            totalAmountSpan.textContent = formatMoney(total);
         });
 
     </script>

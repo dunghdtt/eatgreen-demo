@@ -196,45 +196,69 @@
             </div>
 
 
-            <!-- Voucher 2 -->
             <div class="voucher-card">
                 <div class="voucher-icon-box">
                     <span>%</span>
                 </div>
                 <div class="voucher-name">giảm 30k Healthy</div>
                 <div class="voucher-point"><small>(200đ)</small></div>
-                <button class="btn-redeem">Redeem</button>
+                <button class="btn-redeem" onclick="redeemHealthy()">Redeem</button>
             </div>
         </div>
+        <script>
+            // Giả lập điểm số của người dùng (Để test được mình để 250 điểm, vì voucher giá 200)
+            let userPoints = 150;
 
-    </div>
-    <script>
-        // animation vòng tròn
-        document.addEventListener("DOMContentLoaded", function () {
-            let circle = document.querySelector(".progress-circle");
+            document.addEventListener("DOMContentLoaded", function () {
+                // Cập nhật số điểm hiển thị lên màn hình
+                document.querySelector(".points-number").textContent = userPoints;
 
-            let currentDeg = 0;
-            let targetDeg = 280;   // độ dài vòng cung
-            let speed = 4;
+                // --- Animation vòng tròn ---
+                let circle = document.querySelector(".progress-circle");
+                let currentDeg = 0;
+                let targetDeg = 280;
+                let speed = 4;
 
-            function animateCircle() {
-                if (currentDeg < targetDeg) {
-                    currentDeg += speed;
-                    circle.style.background = `conic-gradient(#00c853 ${currentDeg}deg, transparent ${currentDeg}deg)`;
-                    requestAnimationFrame(animateCircle);
+                function animateCircle() {
+                    if (currentDeg < targetDeg) {
+                        currentDeg += speed;
+                        circle.style.background = `conic-gradient(#00c853 ${currentDeg}deg, transparent ${currentDeg}deg)`;
+                        requestAnimationFrame(animateCircle);
+                    }
+                }
+                animateCircle();
+            });
+
+            // 1. Logic đổi Freeship (giá 100 điểm)
+            function redeemFreeship() {
+                if (userPoints >= 100) {
+                    // Lưu trạng thái freeship
+                    localStorage.setItem("freeshipUsed", "true");
+                    // Xóa trạng thái healthy (nếu muốn chỉ được dùng 1 loại voucher)
+                    localStorage.removeItem("healthyApplied");
+
+                    alert("Đổi mã Freeship thành công!");
+                    window.location.href = "gio.html";
+                } else {
+                    alert("Bạn không đủ điểm để đổi mã này!");
                 }
             }
 
-            animateCircle();
-        });
+            // 2. Logic đổi Voucher Healthy 30k (giá 200 điểm)
+            function redeemHealthy() {
+                if (userPoints >= 200) {
+                    // Lưu trạng thái healthy
+                    localStorage.setItem("healthyApplied", "true");
+                    // Xóa trạng thái freeship (nếu muốn chỉ được dùng 1 loại voucher)
+                    localStorage.removeItem("freeshipUsed");
 
-        // dùng freeship -> set localStorage + quay lại cart
-        function redeemFreeship() {
-            localStorage.setItem("freeshipUsed", "true");
-            window.location.href = "gio.html"; // đổi tên nếu file giỏ hàng của bạn khác
-        }
-    </script>
-
+                    alert("Đổi voucher giảm 30k thành công!");
+                    window.location.href = "gio.html";
+                } else {
+                    alert("Bạn cần 200 điểm để đổi mã này. Bạn chỉ có " + userPoints + " điểm.");
+                }
+            }
+        </script>
 </body>
 
 </html>
