@@ -340,10 +340,8 @@
         }
 
         function backToHome() {
-            // Reset tất cả voucher đã áp dụng
             localStorage.removeItem("freeshipUsed");
             localStorage.removeItem("healthyApplied");
-            // Chuyển về trang chủ
             window.location.href = "trangChu.html";
         }
 
@@ -362,23 +360,18 @@
 
             // Tính tổng tiền
             let total = ITEMS_TOTAL;
-
-            // Xử lý giảm giá healthy
-            if (healthyApplied) {
-                healthyDiscountRow.style.display = "flex";
-                total -= HEALTHY_DISCOUNT;
-            }
             if (freeshipUsed || healthyApplied) {
                 // Đổi UI sang trạng thái "Đã dùng"
                 voucherIcon.style.display = "inline";
                 voucherBtn.style.display = "none";
                 voucherChangeBtn.style.display = "inline";
 
-                // Nếu dùng healthy thì hiện giảm giá
+                // Nếu dùng healthy
                 if (healthyApplied) {
                     healthyDiscountRow.style.display = "flex";
-                    total -= HEALTHY_DISCOUNT;
-                    // Cộng lại ship vì không dùng freeship
+                    total -= HEALTHY_DISCOUNT; // Chỉ trừ 1 lần ở đây
+
+                    // Cộng lại ship vì không được freeship
                     total += SHIPPING_FEE;
                     shippingFeeSpan.textContent = formatMoney(SHIPPING_FEE);
                     shippingFeeSpan.classList.remove("strike");
@@ -389,7 +382,8 @@
                 if (freeshipUsed) {
                     shippingFeeSpan.classList.add("strike");
                     shippingNote.style.display = "block";
-                    healthyDiscountRow.style.display = "none"; // Ẩn dòng healthy
+                    healthyDiscountRow.style.display = "none";
+                    // Không cộng SHIPPING_FEE vào total (ngầm định là +0)
                 }
 
             } else {
@@ -397,10 +391,12 @@
                 shippingFeeSpan.textContent = formatMoney(SHIPPING_FEE);
                 total += SHIPPING_FEE;
 
+                // Reset UI nút
                 voucherIcon.style.display = "none";
                 voucherBtn.style.display = "inline";
                 voucherChangeBtn.style.display = "none";
             }
+
 
             // Hiển thị tổng tiền cuối cùng
             totalAmountSpan.textContent = formatMoney(total);
